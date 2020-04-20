@@ -209,7 +209,7 @@ The same goes for other providers.
 
 <hr>
 
-<img src="http://www.doit.ba/img/facebook.jpg" width="200">
+<img src="https://en.facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png" width="90">
 
 - Visit <a href="https://developers.facebook.com/" target="_blank">Facebook Developers</a>
 - Click **My Apps**, then select **Add a New App* from the dropdown menu
@@ -274,7 +274,7 @@ The same goes for other providers.
 
 <hr>
 
-<img src="https://stripe.com/img/about/logos/logos/black@2x.png" width="200">
+<img src="https://stripe.com/img/about/logos/logos/black@2x.png" width="180">
 
 - <a href="https://stripe.com/" target="_blank">Sign up</a> or log into your <a href="https://manage.stripe.com" target="_blank">dashboard</a>
 - Click on your profile and click on Account Settings
@@ -283,7 +283,7 @@ The same goes for other providers.
 
 <hr>
 
-<img src="https://pixabay.com/static/uploads/photo/2015/05/26/09/37/paypal-784404_960_720.png" width="200">
+<img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" width="150">
 
 - Visit <a href="https://developer.paypal.com" target="_blank">PayPal Developer</a>
 - Log in to your PayPal account
@@ -324,6 +324,19 @@ The same goes for other providers.
 - Sign in with your existing Steam account
 - Enter your *Domain Name*, then and click **Register**
 - Copy and paste *Key* into `.env` file
+
+<hr>
+<img src="https://www.freepnglogos.com/uploads/twitch-logo-image-hd-31.png" height="90">
+
+- Visit the <a href="https://dev.twitch.tv/dashboard/apps" target="_blank">Twitch developer dashboard</a>
+- If prompted, authorize the dashboard to access your twitch account
+- In the Console, click on Register Your Application
+- Enter the name of your application
+- Use OAuth Redirect URLs enter `http://localhost:8080/auth/twitch/callback`
+- Set Category to Website Integration and press the Create button
+- After the applicaiton has been created, click on the Manage button
+- Copy and paste *Client ID* into `.env`
+- If there is no Client Secret displayed, click on New Secret button and then copy and paste the *Client secret* into `.env`
 
 <hr>
 
@@ -462,11 +475,10 @@ List of Packages
 | passport-oauth2-refresh         | A library to refresh OAuth 2.0 access tokens using refresh tokens.      |
 | passport-snapchat               | Sign-in with Snapchat plugin.                                           |
 | passport-twitter                | Sign-in with Twitter plugin.                                            |
+| passport-twitch-new             | Sign-in with Twitch plugin.                                             |
 | paypal-rest-sdk                 | PayPal APIs library.                                                    |
 | pug                             | Template engine for Express.                                            |
-| request                         | Simplified HTTP request library.                                        |
 | sinon                           | Test spies, stubs and mocks for JavaScript.                             |
-| sinon-mongoose                  | Extend Sinon stubs for Mongoose methods to test chained methods easily. |
 | stripe                          | Offical Stripe API library.                                             |
 | supertest                       | HTTP assertion library.                                                 |
 | tumblr.js                       | Tumblr API library.                                                     |

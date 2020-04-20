@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 const graph = require('fbgraph');
 const { LastFmNode } = require('lastfm');
 const tumblr = require('tumblr.js');
-const GitHub = require('@octokit/rest');
+const { Octokit } = require('@octokit/rest');
 const Twit = require('twit');
 const stripe = require('stripe')(process.env.STRIPE_SKEY);
 const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
@@ -121,7 +121,7 @@ exports.getScraping = (req, res, next) => {
  * GitHub API Example.
  */
 exports.getGithub = async (req, res, next) => {
-  const github = new GitHub();
+  const github = new Octokit();
   try {
     const { data: repo } = await github.repos.get({ owner: 'sahat', repo: 'hackathon-starter' });
     res.render('api/github', {
@@ -448,6 +448,37 @@ exports.postTwilio = (req, res, next) => {
     req.flash('success', { msg: `Text send to ${sentMessage.to}` });
     res.redirect('/api/twilio');
   }).catch(next);
+};
+
+/**
+ * Get /api/twitch
+ */
+exports.getTwitch = async (req, res, next) => {
+  const token = req.user.tokens.find((token) => token.kind === 'twitch');
+  const twitchID = req.user.twitch;
+
+  const getUser = (userID) =>
+    axios.get(`https://api.twitch.tv/helix/users?id=${userID}`, { headers: { Authorization: `Bearer ${token.accessToken}` } })
+      .then(({ data }) => data)
+      .catch((err) => Promise.reject(new Error(`There was an error while getting user data ${err}`)));
+  const getFollowers = () =>
+    axios.get(`https://api.twitch.tv/helix/users/follows?to_id=${twitchID}`, { headers: { Authorization: `Bearer ${token.accessToken}` } })
+      .then(({ data }) => data)
+      .catch((err) => Promise.reject(new Error(`There was an error while getting followers ${err}`)));
+
+  try {
+    const yourTwitchUser = await getUser(twitchID);
+    const otherTwitchUser = await getUser(44322889);
+    const twitchFollowers = await getFollowers();
+    res.render('api/twitch', {
+      title: 'Twitch API',
+      yourTwitchUserData: yourTwitchUser.data[0],
+      otherTwitchUserData: otherTwitchUser.data[0],
+      twitchFollowers,
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 /**
